@@ -11,34 +11,45 @@ class App extends React.Component {
     }
     this.start = this.start.bind(this)
     this.stop = this.stop.bind(this)
-    this.pause = this.pause.bind(this)
+    this.reset = this.reset.bind(this)
 
 
   }
+  
   start(){
-    setInterval(() => {
+    this.counter = setInterval(() => {
       this.setState({
-        count: this.state.count + 1
+        count: this.state.count + 1,
+        counting: true
       })
     }, 1000)
+  
   }
 
   stop(){
-    clearInterval(this.start)
+    clearInterval(this.counter)
     this.setState({
-      count: this.state.count
+      count: this.state.count,
+      counting: false
+    })
+  
+  }
+
+  reset(){
+    this.setState({
+      count: 0,
+      counting: false
     })
   }
 
-  pause(){
-
-  }
-
   render(){
+    if(this.state.counting === false){
+      clearInterval(this.start)
+    }
   return (
     <div className="App">
     <h1>{this.state.count}</h1>
-    <button onClick={this.start}>Start</button> <button onClick={this.stop}>Stop</button> <button onClick={this.pause}>Reset</button>
+    <button onClick={this.start}>Start</button> <button onClick={this.stop}>Stop</button> <button onClick={this.reset}>Reset</button>
     </div>
   );
 }
